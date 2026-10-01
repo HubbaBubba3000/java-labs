@@ -23,6 +23,7 @@ public class Task2 extends Task {
             return true;
         }
         return false;
+        // return (x % 3 == 0 ^ x % 5 == 0);
     }
 
     public int max3 (int x, int y, int z) {
