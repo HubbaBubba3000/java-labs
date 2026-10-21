@@ -1,51 +1,142 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
+    private static final Scanner sc = new Scanner(System.in);
+
+    // ---------- Хелперы ввода ----------
+
+    private static String askString(String prompt) {
+        System.out.print(prompt);
+        return sc.nextLine().trim();
+    }
+
+    private static int askInt(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String s = sc.nextLine().trim();
+            try {
+                return Integer.parseInt(s);
+            } catch (NumberFormatException e) {
+                System.out.println("Ожидается целое число, попробуйте ещё раз.");
+            }
+        }
+    }
+
+    // ---------- Задача 1.2 ----------
+
     public static void printHumanHeights() {
         System.out.println("============Задача 1.2===========");
-        final Human p = new Human("Пушкин", 167);
-        final Human k = new Human("Клеопатра",152);
-        final Human v = new Human("Владимир", 189);
-        System.out.println(k);
-        System.out.println(p);
-        System.out.println(v);
+        int n = askInt("Сколько людей ввести? ");
+        List<Human> humans = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            String name = askString("Имя человека #" + i + ": ");
+            int height = askInt("Рост (см) человека #" + i + ": ");
+            humans.add(new Human(name, height));
+        }
+        for (Human h : humans) {
+            System.out.println(h);
+        }
     }
+
+    // ---------- Задача 2.4 и 3.4 ----------
 
     public static void manageEmploees() {
         System.out.println("============Задача 2.4 и 3.4===========");
 
-        Emploee k = new Emploee("Козлова");
-        Section it = new Section("IT", k);
-        Emploee p = new Emploee("Петрова", it);
-        Emploee s = new Emploee("Сидорова", it);
-        System.out.println(p);
-        System.out.println(k);
-        System.out.println(s);
-        System.out.println(p.section.getEmploeesList()); // выводим список от лица петровой
+        String sectionName = askString("Название отдела: ");
+        String leaderName  = askString("Имя начальника отдела: ");
+
+        Emploee leader = new Emploee(leaderName);
+        Section it     = new Section(sectionName, leader);
+
+        int n = askInt("Сколько сотрудников добавить (не считая начальника)? ");
+        List<Emploee> employees = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            String empName = askString("Имя сотрудника #" + i + ": ");
+            employees.add(new Emploee(empName, it));
+        }
+
+        System.out.println();
+        System.out.println(leader);
+        for (Emploee e : employees) {
+            System.out.println(e);
+        }
+
+        // Список отдела от лица первого добавленного сотрудника
+        if (!employees.isEmpty()) {
+            System.out.println(employees.get(0).section.getEmploeesList());
+        }
     }
+
+    // ---------- Задача 1.3 и 4.5 ----------
+
     public static void naming() {
         System.out.println("============Задача 1.3 и 4.5===========");
-        Name c = new Name("Клеопатра");
-        Name p = new Name("Александр", "Пушкин", "Сергеевич");
-        Name m = new Name("Владимир", "Маяковский");
-        Name k = new Name("Христофор", "Бонифатьевич");
-        System.out.println(c);
-        System.out.println(p);
-        System.out.println(m);
-        System.out.println(k);
+        int n = askInt("Сколько имён ввести? ");
+        List<Name> names = new ArrayList<>();
+
+        for (int i = 1; i <= n; i++) {
+            System.out.println("--- Имя #" + i + " ---");
+            String firstName  = askString("Личное имя (обязательно): ");
+            String lastName   = askString("Фамилия (Enter — пропустить): ");
+            String patronymic = askString("Отчество (Enter — пропустить): ");
+
+            Name name;
+            if (lastName.isEmpty() && patronymic.isEmpty()) {
+                name = new Name(firstName);                       // только имя
+            } else if (patronymic.isEmpty()) {
+                name = new Name(firstName, lastName);             // имя + фамилия
+            } else {
+                name = new Name(firstName,
+                                lastName.isEmpty() ? null : lastName,
+                                patronymic);                      // все три
+            }
+            names.add(name);
+        }
+
+        for (Name name : names) {
+            System.out.println(name);
+        }
     }
+
+    // ---------- Задача 5.1 ----------
+
     public static void shooting() {
         System.out.println("============Задача 5.1===========");
-        Pistol p = new Pistol(3);
-        for(int i=1;i<=5;i++)
-            p.shoot();
+
+        System.out.print("Начальное количество патронов (Enter — по умолчанию 5): ");
+        String s = sc.nextLine().trim();
+        Pistol pistol;
+        if (s.isEmpty()) {
+            pistol = new Pistol();                                // 5 патронов
+        } else {
+            try {
+                pistol = new Pistol(Integer.parseInt(s));
+            } catch (NumberFormatException e) {
+                System.out.println("Некорректный ввод — использую значение по умолчанию (5).");
+                pistol = new Pistol();
+            }
+        }
+
+        int shots = askInt("Сколько раз выстрелить? ");
+        for (int i = 1; i <= shots; i++) {
+            System.out.print("Выстрел " + i + ": ");
+            pistol.shoot();
+        }
+        System.out.println("Осталось патронов: " + pistol.getBullets());
     }
 
-    public static void main(String[] args) {
+    // ---------- Точка входа ----------
 
+    public static void main(String[] args) {
         printHumanHeights();
         manageEmploees();
         naming();
         shooting();
+        // Scanner, оборачивающий System.in, не закрываем —
+        // после закрытия System.in нельзя будет читать дальше.
     }
 }
