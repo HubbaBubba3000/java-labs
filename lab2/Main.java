@@ -6,8 +6,6 @@ public class Main {
 
     private static final Scanner sc = new Scanner(System.in);
 
-    // ---------- Хелперы ввода ----------
-
     private static String askString(String prompt) {
         System.out.print(prompt);
         return sc.nextLine().trim();
@@ -86,13 +84,13 @@ public class Main {
 
             Name name;
             if (lastName.isEmpty() && patronymic.isEmpty()) {
-                name = new Name(firstName);                       // только имя
+                name = new Name(firstName);
             } else if (patronymic.isEmpty()) {
-                name = new Name(firstName, lastName);             // имя + фамилия
+                name = new Name(firstName, lastName);
             } else {
                 name = new Name(firstName,
                                 lastName.isEmpty() ? null : lastName,
-                                patronymic);                      // все три
+                                patronymic);
             }
             names.add(name);
         }
@@ -111,7 +109,7 @@ public class Main {
         String s = sc.nextLine().trim();
         Pistol pistol;
         if (s.isEmpty()) {
-            pistol = new Pistol();                                // 5 патронов
+            pistol = new Pistol();
         } else {
             try {
                 pistol = new Pistol(Integer.parseInt(s));
@@ -136,7 +134,5 @@ public class Main {
         manageEmploees();
         naming();
         shooting();
-        // Scanner, оборачивающий System.in, не закрываем —
-        // после закрытия System.in нельзя будет читать дальше.
     }
 }
