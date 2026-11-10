@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.bubnov.communication.Name;
+
 public class Main {
 
     private static final Scanner sc = new Scanner(System.in);
@@ -130,9 +132,9 @@ public class Main {
     // ---------- Точка входа ----------
 
     public static void main(String[] args) {
-        printHumanHeights();
+        // printHumanHeights();
         manageEmploees();
-        naming();
-        shooting();
+        // naming();
+        // shooting();
     }
 }

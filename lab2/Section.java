@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Section {
     public final String name;
     public Emploee leader;
-    public final List<Emploee> emploees;
+    public List<Emploee> emploees;
 
     public Section(String name, Emploee leader) {
         this.name = name;
