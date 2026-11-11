@@ -68,7 +68,9 @@ public class Main {
     private static void demonstratePoint() {
         Point first = new Point(2, 3);
         Point second = new Point(2, 3);
-        System.out.println("\nТочки равны: " + first.equals(second));
+        Point third = new Point(3, 2);
+        System.out.println("\nТочки 1 и 2 равны: " + first.equals(second));
+        System.out.println("\nТочки 1 и 3 равны: " + first.equals(third));
     }
 
     private static void demonstrateShooters() {

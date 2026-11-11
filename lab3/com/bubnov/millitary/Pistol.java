@@ -42,9 +42,6 @@ public class Pistol extends Weapon {
         return String.format("в магазине %d/%d патронов", ammo, maxBullets);
     }
 
-    /**
-     * Заряжает пистолет и возвращает патроны, не поместившиеся в магазин.
-     */
     public int reload(int bullets) {
         if (bullets < 0) {
             throw new IllegalArgumentException("Количество патронов не может быть отрицательным");
@@ -54,7 +51,6 @@ public class Pistol extends Weapon {
         return bullets - loaded;
     }
 
-    /** Разряжает пистолет и возвращает извлечённые патроны. */
     public int unload() {
         int unloaded = ammo;
         ammo = 0;

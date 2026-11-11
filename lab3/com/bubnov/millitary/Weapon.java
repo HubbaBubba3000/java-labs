@@ -1,7 +1,6 @@
 package com.bubnov.millitary;
 
 public abstract class Weapon {
-    /** Количество патронов, доступное наследникам оружия. */
     protected int ammo;
 
     protected Weapon(int ammo) {

@@ -9,9 +9,6 @@ import java.util.StringJoiner;
 public class PhoneBook {
     private final Map<String, String> records = new HashMap<>();
 
-    /**
-     * Добавляет контакт. Если имя уже было в справочнике, возвращает его старый телефон.
-     */
     public String addRecord(String phone, String name) {
         validateContact(phone, "Телефон");
         validateContact(name, "Имя");
